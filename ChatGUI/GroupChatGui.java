@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import FriendRequest.runRequestForm;
-import src.RoundedBorder;
+import stuffs.RoundedBorder;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -176,7 +176,7 @@ public class GroupChatGui extends JFrame {
 		
 		//Setup Button Choose Mode Chat
 		JButton buttonChooseMode = new JButton();
-		Image imgChooseMode = ImageIO.read(getClass().getResource("/src/log-out.png"));
+		Image imgChooseMode = ImageIO.read(getClass().getResource("/stuffs/log-out.png"));
 		buttonChooseMode.setBounds(635, 1, 40, 40);
 		buttonChooseMode.setIcon(new ImageIcon(imgChooseMode));
 		frameMain.getContentPane().add(buttonChooseMode);
@@ -201,7 +201,7 @@ public class GroupChatGui extends JFrame {
 		
 		//Setup Button Friend Request
 		JButton buttonFriendRequest = new JButton();
-		Image imgFriendRequest = ImageIO.read(getClass().getResource("/src/add-friend.png"));
+		Image imgFriendRequest = ImageIO.read(getClass().getResource("/stuffs/add-friend.png"));
 		buttonFriendRequest.setBounds(635, 50, 40, 40);
 		buttonFriendRequest.setIcon(new ImageIcon(imgFriendRequest));
 		frameMain.getContentPane().add(buttonFriendRequest);

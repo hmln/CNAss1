@@ -70,7 +70,7 @@ public class ChooseChatMode {
 		groupMode.setBounds(220, 150, 130, 130);
 		
 		//Setup image for Chat Group button
-		Image imgGroupMode = ImageIO.read(getClass().getResource("/src/team.png"));
+		Image imgGroupMode = ImageIO.read(getClass().getResource("/stuffs/team.png"));
 		groupMode.setIcon(new ImageIcon(imgGroupMode));
 		groupMode.setBackground(Color.WHITE);
 		groupMode.setFocusPainted(false);
@@ -92,7 +92,7 @@ public class ChooseChatMode {
 		friendMode.setBounds(600, 150, 130, 130);
 		
 		//Setup image for Chat 1 -1 button
-		Image imgFriendMode = ImageIO.read(getClass().getResource("/src/boss.png"));
+		Image imgFriendMode = ImageIO.read(getClass().getResource("/stuffs/boss.png"));
 		friendMode.setIcon(new ImageIcon(imgFriendMode));
 		friendMode.setBackground(Color.WHITE);
 		friendMode.setFocusPainted(false);

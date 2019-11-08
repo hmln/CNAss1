@@ -1,11 +1,11 @@
 package Reg;
-import src.RoundJTextField;
 import java.awt.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Login.runLogin;
+import stuffs.RoundJTextField;
 
 import java.awt.event.*;
 
@@ -103,7 +103,7 @@ public class Regis {
 		//Set up Sign up button
 		JButton buttonSignUp = new JButton();
 		try {
-		    Image imgSignUp = ImageIO.read(getClass().getResource("/src/correct (2).png"));
+		    Image imgSignUp = ImageIO.read(getClass().getResource("/stuffs/correct (2).png"));
 		    buttonSignUp.setIcon(new ImageIcon(imgSignUp));
 		    buttonSignUp.setBounds(440, 305, 70, 70);
 		    buttonSignUp.setBackground(Color.WHITE);
@@ -149,7 +149,7 @@ public class Regis {
 		JButton buttonBack = new JButton();
 		//Check the resource first, if it has, it displays
 		try {
-		    Image img = ImageIO.read(getClass().getResource("/src/back (2).png"));
+		    Image img = ImageIO.read(getClass().getResource("/stuffs/back (2).png"));
 		    buttonBack.setIcon(new ImageIcon(img));
 		    buttonBack.setBounds(40, 40, 40, 40);
 		    buttonBack.setBackground(Color.WHITE);

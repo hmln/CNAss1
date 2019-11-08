@@ -5,10 +5,9 @@ import javax.swing.border.LineBorder;
 
 import ChatGUI.runChooseChatMode;
 import Reg.runRegis;
+import stuffs.RoundJTextField;
 
 import java.awt.event.*;
-
-import src.RoundJTextField;
 
 public class Login {
 	JFrame loginWindow;

@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
-import src.RoundedBorder;
+import stuffs.RoundedBorder;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;

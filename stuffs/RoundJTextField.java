@@ -1,4 +1,4 @@
-package src;
+package stuffs;
 
 import java.awt.Graphics;
 import java.awt.Shape;

@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import Login.runLogin;
-import src.RoundedBorder;
+import stuffs.RoundedBorder;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -176,7 +176,7 @@ public class FriendChat extends JFrame {
 		
 		//Setup Button Choose Mode
 		JButton buttonChooseMode = new JButton();
-		Image imgChooseMode = ImageIO.read(getClass().getResource("/src/log-out.png"));
+		Image imgChooseMode = ImageIO.read(getClass().getResource("/stuffs/log-out.png"));
 		buttonChooseMode.setBounds(635, 1, 40, 40);
 		buttonChooseMode.setIcon(new ImageIcon(imgChooseMode));
 		frameMain.getContentPane().add(buttonChooseMode);
@@ -233,7 +233,7 @@ public class FriendChat extends JFrame {
 		
 		//Setup Button Friend Request
 		JButton buttonFriendRequest = new JButton();
-		Image imgFriendRequest = ImageIO.read(getClass().getResource("/src/add-friend.png"));
+		Image imgFriendRequest = ImageIO.read(getClass().getResource("/stuffs/add-friend.png"));
 		buttonFriendRequest.setBounds(635, 50, 40, 40);
 		buttonFriendRequest.setIcon(new ImageIcon(imgFriendRequest));
 		frameMain.getContentPane().add(buttonFriendRequest);
@@ -288,7 +288,7 @@ public class FriendChat extends JFrame {
 		btnNewButton_2.setBounds(640, 475, 30, 30);
 		btnNewButton_2.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		btnNewButton_2.setBackground(new Color(253, 245, 230));
-		Image imgIcon_1 = ImageIO.read(getClass().getResource("/src/right-arrow.png"));
+		Image imgIcon_1 = ImageIO.read(getClass().getResource("/stuffs/right-arrow.png"));
 		btnNewButton_2.setIcon(new ImageIcon(imgIcon_1));
 		btnNewButton_2.setBackground(Color.WHITE);
 		btnNewButton_2.setFocusPainted(false);
@@ -303,7 +303,7 @@ public class FriendChat extends JFrame {
 		//Setup Button Send Picture
 		btnNewButton_4 = new JButton();//send picture
 		btnNewButton_4.setBounds(240, 430, 40, 40);
-		Image img = ImageIO.read(getClass().getResource("/src/picture.png"));
+		Image img = ImageIO.read(getClass().getResource("/stuffs/picture.png"));
 		btnNewButton_4.setIcon(new ImageIcon(img));
 		btnNewButton_4.setBackground(Color.WHITE);
 		btnNewButton_4.setFocusPainted(false);
@@ -342,7 +342,7 @@ public class FriendChat extends JFrame {
 				}
 			}
 		});
-		Image imgicon = ImageIO.read(getClass().getResource("/src/file.png"));
+		Image imgicon = ImageIO.read(getClass().getResource("/stuffs/file.png"));
 		button.setIcon(new ImageIcon(imgicon));
 		button.setBounds(203, 435, 30, 30);
 		button.setBackground(Color.WHITE);
@@ -367,7 +367,7 @@ public class FriendChat extends JFrame {
 				}
 			}
 		});
-		Image imgMusic = ImageIO.read(getClass().getResource("/src/music-player.png"));
+		Image imgMusic = ImageIO.read(getClass().getResource("/stuffs/music-player.png"));
 		buttonMusic.setIcon(new ImageIcon(imgMusic));
 		buttonMusic.setBounds(285, 435, 30, 30);
 		buttonMusic.setBackground(Color.WHITE);
@@ -389,7 +389,7 @@ public class FriendChat extends JFrame {
 				}
 			}
 		});
-		Image imgOther = ImageIO.read(getClass().getResource("/src/folder.png"));
+		Image imgOther = ImageIO.read(getClass().getResource("/stuffs/folder.png"));
 		buttonOther.setIcon(new ImageIcon(imgOther));
 		buttonOther.setBounds(325, 435, 30, 30);
 		buttonOther.setBackground(Color.WHITE);
