@@ -278,11 +278,15 @@ public class GroupChatGui extends JFrame {
 		sendMessageButton = new JButton();//send message
 		sendMessageButton.addMouseListener(new MouseAdapter() {
 			@Override
+			
 			public void mousePressed(MouseEvent e) {
-				content ="You: " + textArea_userInput.getText() + "\n";
+				String input = textArea_userInput.getText();
+				if (input.equals("")) return;
+				content ="You: " + input + "\n";
 				textArea.append(content);
 				textArea_userInput.setText("");
 			}
+			
 		});
 		
 		sendMessageButton.setBounds(660, 475, 30, 30);

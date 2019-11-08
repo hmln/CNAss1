@@ -124,10 +124,12 @@ public class FriendChat extends JFrame {
 		frameMain.getContentPane().add(labelActiveNow);
 		
 		//Set up JList for Online Friend List
-		listActive = new JList<>();
+		DefaultListModel<String> friendList = new DefaultListModel<String>();
+		listActive = new JList<>(friendList);
 		listActive.setBounds(16, 30, 156, 484);
 		listActive.setBorder(new LineBorder(newBlue, 1));
 		listActive.setFont(new Font("Segoe UI",Font.PLAIN,15));
+		
 		
 		//Setup Event for Online Friend List
 		/*
@@ -276,7 +278,9 @@ public class FriendChat extends JFrame {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				content ="You: " + textArea_1.getText() + "\n";
+				String input = textArea_1.getText();
+				if (input.equals("")) return;
+				content ="You: " + input + "\n";
 				textArea.append(content);
 				textArea_1.setText("");
 			}
