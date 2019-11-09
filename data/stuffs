@@ -1,0 +1,9 @@
+Các bước để import thành công phần data
+1. Thêm gson.jar vào library trong Eclipse (có thể hỏi google nếu chưa biết)
+2. Vào 2 file UserDB.java và LogDB.java, sửa biến LogDBPath và UserDBPath đoạn sau concat thành thư mục của bản thân
+  Ví dụ: 
+  ........concat("/src/UserData"); tức là folder UserData ở <Project>/src
+3. Tạo folder UserData và Log ở đường dẫn theo bước 2
+  Trong tương lai sẽ sửa đoạn code này để không cần phải tạo folder
+4. Sửa các lỗi import
+5. Hết rồi đọc chi nữa
