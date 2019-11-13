@@ -9,6 +9,9 @@ public class Account
 	private char[] password;
 	private Set<String> friendlist = new HashSet<String>();
 	private Set<String> requestlist = new HashSet<String>();
+	private String ip;
+	private int port;
+	
 	public Account(String userName)
 	{
 		this.userName = userName;
@@ -48,13 +51,13 @@ public class Account
 	
 	public void removeFriend(String username) throws IOException
 	{
-		//error value to null when removing friend
 		friendlist.remove(username);
 		UserDB.createJson(this);
 	}
 	public Set<String> getFriendList()
 	{
-		return friendlist;
+		Set<String> newset = new TreeSet<>(friendlist);
+		return newset;
 	}
 	public boolean isFriend(String user)
 	{
@@ -86,4 +89,27 @@ public class Account
 		}
 		return false;
 	}
+	
+	public void updateIp(String newIp) throws IOException
+	{
+		this.ip = newIp;
+		UserDB.createJson(this);
+	}
+	
+	public void updatePort(int newPort) throws IOException
+	{
+		this.port = newPort;
+		UserDB.createJson(this);
+	}
+	
+	public String getIp()
+	{
+		return ip;
+	}
+	
+	public int getPort()
+	{
+		return port;
+	}
 }
+
