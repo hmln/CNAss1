@@ -3,10 +3,6 @@ package ChatGUI;
 import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import Login.runLogin;
-import Reg.Regis;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -17,7 +13,7 @@ public class ChooseChatMode {
 	private JButton groupMode;
 	private JButton logOut;
 	
-	public ChooseChatMode() throws IOException {
+	public ChooseChatMode() throws IOException{
 		init();
 	}
 	
@@ -70,44 +66,53 @@ public class ChooseChatMode {
 		groupMode.setBounds(220, 150, 130, 130);
 		
 		//Setup image for Chat Group button
-		Image imgGroupMode = ImageIO.read(getClass().getResource("/stuffs/team.png"));
+		Image imgGroupMode = ImageIO.read(getClass().getResource("/utils/team.png"));
 		groupMode.setIcon(new ImageIcon(imgGroupMode));
 		groupMode.setBackground(Color.WHITE);
 		groupMode.setFocusPainted(false);
 		groupMode.setBorder(BorderFactory.createEmptyBorder());
-		
+		mainWindow.getContentPane().add(groupMode);	
 		//Setup Event Chat Group
 		groupMode.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				runGroupChatGui amy = new runGroupChatGui();
-				amy.main(null);
-				mainWindow.dispose();
+				/*try {
+					GroupChatGui chat = new GroupChatGui();
+					chat.frameMain.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				mainWindow.dispose();*/
+				JOptionPane.showMessageDialog(null, "Comming soon!", "Plz wait", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		mainWindow.getContentPane().add(groupMode);
+		
 		
 		//Setup Button Chat Friend
 		friendMode = new JButton();
 		friendMode.setBounds(600, 150, 130, 130);
 		
 		//Setup image for Chat 1 -1 button
-		Image imgFriendMode = ImageIO.read(getClass().getResource("/stuffs/boss.png"));
+		Image imgFriendMode = ImageIO.read(getClass().getResource("/utils/boss.png"));
 		friendMode.setIcon(new ImageIcon(imgFriendMode));
 		friendMode.setBackground(Color.WHITE);
 		friendMode.setFocusPainted(false);
 		friendMode.setBorder(BorderFactory.createEmptyBorder());
-		
+		mainWindow.getContentPane().add(friendMode);
 		//Setup Event Chat 1-1
 		friendMode.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				runFriendChat amy = new runFriendChat();
-				amy.main(null);
+				try {
+					FriendList list = new FriendList();
+					list.frame.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				mainWindow.dispose();
 			}
 		});
-		mainWindow.getContentPane().add(friendMode);
+		
 		
 		//Setup Label Not Your Account
 		JLabel notAccount = new JLabel("Not Your Account?");
@@ -127,8 +132,8 @@ public class ChooseChatMode {
 				//Call new Login
 				new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
-						runLogin amy = new runLogin();
-						amy.main(null);
+						Login login = new Login();
+						login.loginWindow.setVisible(true);
 						mainWindow.dispose();
 					}
 				}

@@ -1,60 +1,29 @@
 package ChatGUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-
-import FriendRequest.runRequestForm;
-import stuffs.RoundedBorder;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.font.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.io.File;
-import java.io.IOException;
-import java.awt.color.*;
+import java.awt.*;
+import javax.swing.*;
+import utils.RoundedBorder;
+import java.io.*;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+
 import javax.swing.BorderFactory;
-import javax.swing.JToolBar;
-import javax.swing.JSlider;
-import javax.swing.JSeparator;
-import javax.swing.JComboBox;
+
 import javax.swing.JFileChooser;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class GroupChatGui extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private static String IPClient = "", userName = "" , userData = "";
 	private static int portClient = 0;
 	JFrame frameMain;
@@ -176,7 +145,7 @@ public class GroupChatGui extends JFrame {
 		
 		//Setup Button Choose Mode Chat
 		JButton buttonChooseMode = new JButton();
-		Image imgChooseMode = ImageIO.read(getClass().getResource("/stuffs/log-out.png"));
+		Image imgChooseMode = ImageIO.read(getClass().getResource("/utils/log-out.png"));
 		buttonChooseMode.setBounds(635, 1, 40, 40);
 		buttonChooseMode.setIcon(new ImageIcon(imgChooseMode));
 		frameMain.getContentPane().add(buttonChooseMode);
@@ -185,8 +154,11 @@ public class GroupChatGui extends JFrame {
 		buttonChooseMode.setBorder(BorderFactory.createEmptyBorder());
 		buttonChooseMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				runChooseChatMode amy = new runChooseChatMode();
-				amy.main(null);
+				try {
+					ChooseChatMode amy = new ChooseChatMode();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				frameMain.dispose();
 			}
 		});
@@ -201,7 +173,7 @@ public class GroupChatGui extends JFrame {
 		
 		//Setup Button Friend Request
 		JButton buttonFriendRequest = new JButton();
-		Image imgFriendRequest = ImageIO.read(getClass().getResource("/stuffs/add-friend.png"));
+		Image imgFriendRequest = ImageIO.read(getClass().getResource("/utils/add-friend.png"));
 		buttonFriendRequest.setBounds(635, 50, 40, 40);
 		buttonFriendRequest.setIcon(new ImageIcon(imgFriendRequest));
 		frameMain.getContentPane().add(buttonFriendRequest);
@@ -210,8 +182,7 @@ public class GroupChatGui extends JFrame {
 		buttonFriendRequest.setBorder(BorderFactory.createEmptyBorder());
 		buttonFriendRequest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				runRequestForm amy = new runRequestForm();
-				amy.main(null);
+				requestForm amy = new requestForm();
 			}
 		});
 		
@@ -292,7 +263,7 @@ public class GroupChatGui extends JFrame {
 		sendMessageButton.setBounds(660, 475, 30, 30);
 		sendMessageButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		sendMessageButton.setBackground(new Color(253, 245, 230));
-		Image imgIcon_1 = ImageIO.read(getClass().getResource("/src/right-arrow.png"));
+		Image imgIcon_1 = ImageIO.read(getClass().getResource("/utils/right-arrow.png"));
 		sendMessageButton.setIcon(new ImageIcon(imgIcon_1));
 		sendMessageButton.setBackground(Color.WHITE);
 		sendMessageButton.setFocusPainted(false);
@@ -308,7 +279,7 @@ public class GroupChatGui extends JFrame {
 		//Setup Send Image
 		sendPictureButton = new JButton();//send picture
 		sendPictureButton.setBounds(240, 430, 40, 40);
-		Image img = ImageIO.read(getClass().getResource("/src/picture.png"));
+		Image img = ImageIO.read(getClass().getResource("/utils/picture.png"));
 		sendPictureButton.setIcon(new ImageIcon(img));
 		sendPictureButton.setBackground(Color.WHITE);
 		sendPictureButton.setFocusPainted(false);
@@ -347,7 +318,7 @@ public class GroupChatGui extends JFrame {
 				}
 			}
 		});
-		Image imgicon = ImageIO.read(getClass().getResource("/src/file.png"));
+		Image imgicon = ImageIO.read(getClass().getResource("/utils/file.png"));
 		sendFilebutton.setIcon(new ImageIcon(imgicon));
 		sendFilebutton.setBounds(203, 435, 30, 30);
 		sendFilebutton.setBackground(Color.WHITE);
@@ -372,7 +343,7 @@ public class GroupChatGui extends JFrame {
 				}
 			}
 		});
-		Image imgMusic = ImageIO.read(getClass().getResource("/src/music-player.png"));
+		Image imgMusic = ImageIO.read(getClass().getResource("/utils/music-player.png"));
 		buttonMusic.setIcon(new ImageIcon(imgMusic));
 		buttonMusic.setBounds(285, 435, 30, 30);
 		buttonMusic.setBackground(Color.WHITE);
@@ -394,7 +365,7 @@ public class GroupChatGui extends JFrame {
 				}
 			}
 		});
-		Image imgOther = ImageIO.read(getClass().getResource("/src/folder.png"));
+		Image imgOther = ImageIO.read(getClass().getResource("/utils/folder.png"));
 		buttonOther.setIcon(new ImageIcon(imgOther));
 		buttonOther.setBounds(325, 435, 30, 30);
 		buttonOther.setBackground(Color.WHITE);
