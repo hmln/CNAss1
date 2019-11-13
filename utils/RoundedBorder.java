@@ -1,4 +1,4 @@
-package stuffs;
+package utils;
 
 import java.awt.Component;
 import java.awt.Graphics;

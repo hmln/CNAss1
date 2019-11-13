@@ -8,7 +8,7 @@ public class UserThread extends Thread{
 	private ServerChat server;
 	private PrintWriter writer;
 	private String username = "";
-	
+	private String destination = "";
 	public UserThread(Socket socket, ServerChat server) 
 	{
         this.socket = socket;
@@ -18,27 +18,34 @@ public class UserThread extends Thread{
 	public void run()
 	{
 		try
-		{
+		{	
 			InputStream input = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			OutputStream output = socket.getOutputStream();
 			writer = new PrintWriter(output,true);
-			
 			username = reader.readLine();
 			server.addUser(username, this);
 			String message = "";
-			String serverMessage;
-			
+
 			while (!message.equals("quit"))
 			{
-				message = reader.readLine();
-				server.announce(message,this);
+				String get = reader.readLine();
+				int pos = get.indexOf(':');
+				if (pos == 1) 
+				{
+					destination = Character.toString(get.charAt(0));
+				}
+				else destination = get.substring(0, pos);
+				System.out.println(pos);	
+				System.out.println(get);
+				message = get.substring(pos+1);
+				System.out.println(destination);
+				System.out.println(message);
+				//server.announce(message,destination);
+				//server.announce(message,this);
 			}
 			server.removeUser(username,this);
 			socket.close();
-			
-			serverMessage = username + "quitted";
-			server.announce(serverMessage, this);
 		} catch (IOException e)
 		{
 			System.out.println("Error at user: " + e.getMessage());
@@ -48,8 +55,8 @@ public class UserThread extends Thread{
 	
 	void sendMessage(String message) throws IOException 
 	{
-        writer.print(message);
-        writer.println();
+        writer.println(message);
+        writer.flush();
     }
 	public String getname()
 	{

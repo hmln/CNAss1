@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 public class UserDB
 {
 	//get absolute path of file as string, then cast to file and get parent folder, then cast to string again
-	private static String UserDBpath = new File(new File("UserDB.java").getAbsolutePath()).getParent().toString().concat("/src/UserData");
+	private static String UserDBpath = new File(new File("UserDB.java").getAbsolutePath()).getParent().toString().concat("/UserData");
 	
 	//make a json file base on user account
 	public static void createJson(Account user) throws IOException
@@ -22,10 +22,15 @@ public class UserDB
 	public static Account getJson(String username) throws IOException
 	{
 		Gson gson = new Gson();
+		File Directory = new File(UserDBpath);
+		if (!Directory.exists())
+		{
+			Directory.mkdirs();
+			return null;
+		}
 		Account result = null;
-		File folder = new File(UserDBpath);
 		Reader reader = null;
-		for (final File entry : folder.listFiles())
+		for (final File entry : Directory.listFiles())
 		{
 			reader = new FileReader(entry.getPath());
 			result = gson.fromJson(reader, Account.class);

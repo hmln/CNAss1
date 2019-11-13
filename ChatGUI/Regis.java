@@ -32,7 +32,6 @@ public class Regis {
 		regWindow.getContentPane().setBackground(Color.WHITE);
 		regWindow.setBounds(480, 320, 960, 480);
 		regWindow.getContentPane().setLayout(null);
-		regWindow.setVisible(true);
 		
 		//Setup Regis Label Welcome
 		JLabel regWel = new JLabel("Welcome!");
@@ -55,10 +54,10 @@ public class Regis {
 		regWindow.getContentPane().add(instruct);		
 		
 		//Set up for Username Label
-		JLabel regUser = new JLabel("username:");
+		JLabel regUser = new JLabel("Username:");
 		regUser.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regUser.setForeground(newBlue);
-		regUser.setBounds(180, 160, 172, 37);
+		regUser.setBounds(182, 160, 172, 37);
 		//regUser.setBorder(new LineBorder(newBlue, 1));
 		regWindow.getContentPane().add(regUser);
 		
@@ -71,10 +70,10 @@ public class Regis {
 		user.setColumns(10);
 		
 		//Set up for Password Label
-		JLabel regPass = new JLabel("password:");
+		JLabel regPass = new JLabel("Password:");
 		regPass.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regPass.setForeground(newBlue);
-		regPass.setBounds(180, 205, 172, 43);
+		regPass.setBounds(190, 205, 172, 43);
 		regWindow.getContentPane().add(regPass);
 		
 		//Setup for password's input
@@ -88,7 +87,7 @@ public class Regis {
 		JLabel regPass2 = new JLabel("Confirm password:");
 		regPass2.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regPass2.setForeground(newBlue);
-		regPass2.setBounds(180, 250, 172, 43);
+		regPass2.setBounds(85, 250, 292, 43);
 		regWindow.getContentPane().add(regPass2);
 				
 		//Setup for password's input
@@ -161,8 +160,7 @@ public class Regis {
 						//When the user click on Back Button, return the Welcome Window
 						public void actionPerformed(ActionEvent event) {
 							//Check login right or wrong
-							Login newlogin = new Login();
-							newlogin.loginWindow.setVisible(true);
+							new Login();
 							regWindow.dispose();
 							
 						}
@@ -173,6 +171,7 @@ public class Regis {
 		catch (Exception ex) {
 		    System.out.println(ex);
 		}
+		regWindow.setVisible(true);
 	}
 	public void reset()
 	{

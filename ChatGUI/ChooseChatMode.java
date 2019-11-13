@@ -30,7 +30,6 @@ public class ChooseChatMode {
 		mainWindow.getContentPane().setBackground(Color.WHITE);
 		mainWindow.setBounds(480, 320, 960, 480);
 		mainWindow.getContentPane().setLayout(null);
-		mainWindow.setVisible(true);
 		
 		//Setup Label Choose Mode Chat
 		JLabel chatMode = new JLabel("Please Choose Chat Mode!");
@@ -104,8 +103,7 @@ public class ChooseChatMode {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					FriendList list = new FriendList();
-					list.frame.setVisible(true);
+					new FriendList();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -140,5 +138,6 @@ public class ChooseChatMode {
 		);
 		logOut.setBounds(515, 363, 80, 35);
 		mainWindow.getContentPane().add(logOut);
+		mainWindow.setVisible(true);
 	}
 }

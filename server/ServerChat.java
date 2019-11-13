@@ -7,15 +7,12 @@ import data.ChatLog;
 
 public class ServerChat {
 	private int port;
-	private volatile static Set<String> usernameSet = null;
-	private Set<UserThread> userThreads = null;
+	private volatile static Map<String,UserThread> clientList; 
 	private ChatLog log = null;
-	
 	public ServerChat(int port) throws IOException
 	{
 		this.port = port;
-		usernameSet = new HashSet<>();
-		userThreads = new HashSet<>();
+		clientList = new HashMap<String,UserThread>();
 		log = new ChatLog();
 		exe();
 	}
@@ -30,6 +27,9 @@ public class ServerChat {
 				UserThread newUser = new UserThread(socket, this);
 				newUser.start();
 				addUser(newUser.getname(),newUser);
+				for (Map.Entry<String, UserThread> entry : clientList.entrySet()) {
+				    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+				}
 			}
 		} catch (IOException ex) 
 		{
@@ -39,37 +39,33 @@ public class ServerChat {
 	
 	void addUser(String userName, UserThread user)
 	{
-		userThreads.add(user);
-		usernameSet.add(userName);
+		clientList.put(userName, user);
+	}
+	
+	UserThread findUser(String userName)
+	{
+		return clientList.get(userName);
 	}
 	
 	void removeUser(String userName, UserThread user) 
 	{
-		boolean check = usernameSet.remove(userName);
-		if (check)
-		{
-			userThreads.remove(user);
-		}
-		else
-		{
-			System.out.println("Error in removing user: "+userName);
-		}
+		clientList.remove(userName);
 	}
 	
-	public static Set<String> getUserlist()
+	public static Map<String, UserThread> getUserlist()
 	{
-		return usernameSet;
+		return clientList;
 	}
-	void announce(String message, UserThread exception) throws IOException
+	void announce(String message, String destination) throws IOException
 	{
-		addMessagetoLog(message);
-		for (UserThread anotherUser : userThreads)
+		for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
 		{
-			if (anotherUser != exception)
+			if (user.getKey().equals(destination))
 			{
-				anotherUser.sendMessage(message);
+				user.getValue().sendMessage(message);
+				return;
 			}
-		}
+	    }
 	}
 	public void addMessagetoLog(String message) throws IOException
 	{

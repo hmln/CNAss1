@@ -26,7 +26,7 @@ public class FriendChat extends JFrame {
 	private JTextArea sendMessage;
 	private JScrollPane scroll_bar;
 	Account user = Login.currentUser;
-	private String partner = "noone";
+	Account partner = null;
 	DefaultListModel<String> friendList = null;
 	
 	private String hostname;
@@ -39,15 +39,15 @@ public class FriendChat extends JFrame {
 	//friend chat as client to other server
 	public FriendChat(String partner) throws Exception 
 	{
-		this.partner = partner;
-		Account destination = UserDB.getJson(partner);
-		hostname = destination.getIp();
-		port = destination.getPort();
+		this.partner = UserDB.getJson(partner);
+		hostname = this.partner.getIp();
+		port = this.partner.getPort();
 		socket = new Socket(hostname, port);
 		
 		OutputStream output = socket.getOutputStream();
 		writer = new PrintWriter(output,true);
 		writer.println(user.getName());
+		
 		initialize();
 		
 
@@ -56,13 +56,13 @@ public class FriendChat extends JFrame {
 	//friend chat as client to own server
 	//had to put a dummy text
 	public FriendChat(String partner, int dummy) throws Exception {
-		this.partner = partner;		
+		this.partner = UserDB.getJson(partner);
 		socket = new Socket(user.getIp(),user.getPort());
 
 		OutputStream output = socket.getOutputStream();
 		writer = new PrintWriter(output,true);
-		initialize();
 		writer.println(user.getName());
+		initialize();
 	}
 	
 	private void initialize() throws IOException {
@@ -138,7 +138,7 @@ public class FriendChat extends JFrame {
 		frame.getContentPane().add(friendInput);
 		
 		//Set up Label Chat
-		userLabel = new JLabel("User " + user.getName() + " chat with " + partner);
+		userLabel = new JLabel("User " + user.getName() + " chat with " + partner.getName());
 		userLabel.setFont(new Font("Caranda Personal Use", Font.PLAIN,22));
 		userLabel.setBounds(200, 55, 350, 50);
 		userLabel.setForeground(blueAqua);
@@ -259,19 +259,12 @@ public class FriendChat extends JFrame {
 		//Listener
 
 		list.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unlikely-arg-type")
 			public void mousePressed(MouseEvent arg) {
 				String value = (String)list.getModel().getElementAt(list.locationToIndex(arg.getPoint()));
-				FriendChat newchat;
 				try {
-					if (ServerChat.getUserlist().contains(value)) 
-						{
-						newchat = new FriendChat(value,0);
-						}
-					else 
-						{
-						newchat = new FriendChat(value);
-						}
-					newchat.frame.setVisible(true);
+					if (ServerChat.getUserlist().containsValue(value)) new FriendChat(value,0);
+					new FriendChat(value);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -336,8 +329,7 @@ public class FriendChat extends JFrame {
 		returnButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ChooseChatMode chat = new ChooseChatMode();
-					chat.mainWindow.setVisible(true);
+					new ChooseChatMode();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -360,9 +352,9 @@ public class FriendChat extends JFrame {
 						return;
 					}
 					System.out.print(sendMessage.getText());
-					message = user.getName() + ": " + sendMessage.getText();
+					message = user.getName() + ":" + sendMessage.getText();
 					chatArea.append(message);
-					writer.println(message);
+					writer.println(partner.getName() + ":" + message);
 					sendMessage.setText(null);
 				}
 			}
@@ -371,9 +363,9 @@ public class FriendChat extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String input = sendMessage.getText();
 				if (input.equals("")) return;
-				message = user.getName() + ": " + input + "\n";
+				message = user.getName() + ":" + input + "\n";
 				chatArea.append(message);
-				writer.println(message);
+				writer.println(partner.getName() + ":" + message);
 				sendMessage.setText("");
 			}
 		});
@@ -438,6 +430,7 @@ public class FriendChat extends JFrame {
 				}
 			}
 		});
+		frame.setVisible(true);
 	}
 	void friendUpdate()
 	{

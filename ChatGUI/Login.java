@@ -39,7 +39,7 @@ public class Login {
 		Color newGray = new Color(183, 184, 186);
 		
 		//Setup the title of the application
-		JLabel labelSys = new JLabel("login chat application");
+		JLabel labelSys = new JLabel("Login chat application");
 		labelSys.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSys.setForeground(newBlue);
 		labelSys.setFont(new Font("Caranda Personal Use", Font.PLAIN, 40));
@@ -47,14 +47,14 @@ public class Login {
 		loginWindow.getContentPane().add(labelSys);
 		
 		//Create the text field tell the user to input Username
-		JLabel labelUser = new JLabel("username:");
+		JLabel labelUser = new JLabel("Username:");
 		labelUser.setFont(new Font("Gabriola", Font.BOLD, 36));
 		labelUser.setForeground(newBlue);
 		labelUser.setBounds(70, 148, 172, 37);
 		loginWindow.getContentPane().add(labelUser);
 		
 		//Create the text field tell the user to input Password
-		JLabel labelPass = new JLabel("password:");
+		JLabel labelPass = new JLabel("Password:");
 		labelPass.setFont(new Font("Gabriola", Font.BOLD, 36));
 		labelPass.setForeground(newBlue);
 		labelPass.setBounds(70, 208, 172, 43);
@@ -108,8 +108,7 @@ public class Login {
 								public void run()
 								{
 									try {
-										ChooseChatMode chat = new ChooseChatMode();
-										chat.mainWindow.setVisible(true);
+										new ChooseChatMode();
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
@@ -148,8 +147,7 @@ public class Login {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
 						loginWindow.dispose();
-						Regis newReg = new Regis();	
-						newReg.regWindow.setVisible(true);
+						new Regis();	
 					}
 				}
 		);
@@ -159,6 +157,7 @@ public class Login {
 		//Separator
 		JSeparator separator = new JSeparator();
 		separator.setBounds(28, 242, 484, 5);
+		loginWindow.setVisible(true);
 	}
 	public void reset()
 	{
