@@ -37,32 +37,37 @@ public class FriendChat extends JFrame {
 	private volatile String message = "";
 	
 	//friend chat as client to other server
-	public FriendChat(String partner) throws Exception 
+	public FriendChat(String partner) throws Exception
 	{
-		this.partner = UserDB.getJson(partner);
-		hostname = this.partner.getIp();
-		port = this.partner.getPort();
-		socket = new Socket(hostname, port);
-		
-		OutputStream output = socket.getOutputStream();
-		writer = new PrintWriter(output,true);
-		writer.println(user.getName());
-		
-		initialize();
-		
-
+		try {
+			this.partner = UserDB.getJson(partner);
+			hostname = this.partner.getIp();
+			port = this.partner.getPort();
+			socket = new Socket(hostname, port);
+			OutputStream output = socket.getOutputStream();
+			writer = new PrintWriter(output,true);
+			writer.println(user.getName());
+			writer.println(this.partner.getName());
+			initialize();
+		} catch (ConnectException e1) {
+			JOptionPane.showMessageDialog(null, "User " + partner + " is offline!", "Sorry", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	//friend chat as client to own server
 	//had to put a dummy text
 	public FriendChat(String partner, int dummy) throws Exception {
-		this.partner = UserDB.getJson(partner);
-		socket = new Socket(user.getIp(),user.getPort());
-
-		OutputStream output = socket.getOutputStream();
-		writer = new PrintWriter(output,true);
-		writer.println(user.getName());
-		initialize();
+		try {
+			this.partner = UserDB.getJson(partner);
+			socket = new Socket(user.getIp(),user.getPort());
+			OutputStream output = socket.getOutputStream();
+			writer = new PrintWriter(output,true);
+			writer.println(user.getName());
+			writer.println(this.partner.getName());
+			initialize();
+		} catch (ConnectException e1) {
+			JOptionPane.showMessageDialog(null, "User " + partner + " is offline!", "Sorry", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void initialize() throws IOException {
@@ -150,6 +155,15 @@ public class FriendChat extends JFrame {
 		chatArea.setBounds(192, 110, 480, 303);
 		chatArea.setLineWrap(true);
 		chatArea.setBorder(new RoundedBorder(8));
+		int token = StrToInt.toInt(user.getName()) + StrToInt.toInt(partner.getName());
+		ChatLog log = LogDB.getJson(token);
+		if (log == null) 
+		{
+			log = new ChatLog(token);
+			LogDB.createJson(log);
+		}
+		for (String entry : log.getMessage())
+			chatArea.append(entry + "\n");
 		//frameMain.getContentPane().add(textArea);
 		
 		//Scroll
@@ -264,7 +278,7 @@ public class FriendChat extends JFrame {
 			public void mousePressed(MouseEvent arg) {
 				String value = (String)list.getModel().getElementAt(list.locationToIndex(arg.getPoint()));
 				try {
-					if (ServerChat.getUserlist().containsValue(value)) new FriendChat(value,0);
+					if (ServerChat.getUserlist().containsValue(value + ":" + user.getName())) new FriendChat(value,0);
 					new FriendChat(value);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -274,56 +288,15 @@ public class FriendChat extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String destination = friendInput.getText();
-				try {
-					//dont add yourself
-					if (destination.equals(user.getName())) JOptionPane.showMessageDialog(null, "Why add yourself duh", "Lmao", JOptionPane.ERROR_MESSAGE);
-					else
-					{
-						Account result = UserDB.getJson(destination);
-						//no account matched
-						if (result == null) JOptionPane.showMessageDialog(null, "Invalid account!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//account is already friend
-						else if (user.isFriend(result.getName())) JOptionPane.showMessageDialog(null, "Account is already your friend!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//account is in request
-						else if (user.inRequest(result.getName())) JOptionPane.showMessageDialog(null, "User is in request list!", "Lol", JOptionPane.INFORMATION_MESSAGE);
-						//else
-						else
-						{
-							result.addRequest(user.getName());
-							JOptionPane.showMessageDialog(null, "Request success!", "OK", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				Validate.validateAddFriend(user,destination);
 				friendInput.setText(null);			
 			}
 		});
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String destination = friendInput.getText();
-				try {
-					//dont remove yourself
-					if (destination.equals(user.getName())) JOptionPane.showMessageDialog(null, "Why remove yourself duh", "Lmao", JOptionPane.ERROR_MESSAGE);
-					else 
-					{
-						Account result = UserDB.getJson(destination); 
-						//account not exist
-						if (result == null) JOptionPane.showMessageDialog(null, "Invalid account!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//not your friend
-						else if (!user.isFriend(result.getName())) JOptionPane.showMessageDialog(null, "Account is not your friend!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//else
-						else
-						{
-							result.removeFriend(user.getName());
-							user.removeFriend(result.getName());
-							friendUpdate();
-							JOptionPane.showMessageDialog(null, "Remove success!", "OK", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				Validate.validateRemoveFriend(user, destination);
+				friendUpdate();
 				friendInput.setText(null);
 			}
 		});
@@ -352,10 +325,9 @@ public class FriendChat extends JFrame {
 						sendMessage.setText(null);
 						return;
 					}
-					System.out.print(sendMessage.getText());
 					message = user.getName() + ":" + sendMessage.getText();
 					chatArea.append(message);
-					writer.println(partner.getName() + ":" + message);
+					writer.println(message);
 					sendMessage.setText(null);
 				}
 			}
@@ -366,7 +338,7 @@ public class FriendChat extends JFrame {
 				if (input.equals("")) return;
 				message = user.getName() + ":" + input + "\n";
 				chatArea.append(message);
-				writer.println(partner.getName() + ":" + message);
+				writer.println(message);
 				sendMessage.setText("");
 			}
 		});
