@@ -11,6 +11,9 @@ public class LogDB {
 		public static void createJson(ChatLog log) throws IOException
 		{
 			Gson gson = new Gson();
+			File Directory = new File(LogDBpath);
+			if (!Directory.exists())
+				Directory.mkdirs();
 			Writer writer = new FileWriter(LogDBpath+"/"+log.getID()+".json");
 			gson.toJson(log, writer);
 			writer.flush();
@@ -21,9 +24,6 @@ public class LogDB {
 		public static ChatLog getJson(int id) throws IOException
 		{
 			Gson gson = new Gson();
-			File Directory = new File(LogDBpath);
-			if (!Directory.exists())
-				Directory.mkdir();
 			ChatLog result = null;
 			Reader reader = new FileReader(LogDBpath+"/"+id+".json");
 			result = gson.fromJson(reader, ChatLog.class);
