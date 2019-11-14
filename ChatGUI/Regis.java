@@ -100,7 +100,7 @@ public class Regis {
 		//Set up Sign up button
 		JButton buttonSignUp = new JButton();
 		try {
-		    Image imgSignUp = ImageIO.read(getClass().getResource("/utils/correct.png"));
+		    Image imgSignUp = ImageIO.read(getClass().getResource("/utils/correct (2).png"));
 		    buttonSignUp.setIcon(new ImageIcon(imgSignUp));
 		    buttonSignUp.setBounds(490, 305, 70, 70);
 		    buttonSignUp.setBackground(Color.WHITE);
