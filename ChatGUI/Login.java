@@ -38,6 +38,37 @@ public class Login {
 		Color border = new Color(213, 232, 212);
 		Color newGray = new Color(183, 184, 186);
 		
+		//Setup Font
+		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		
+		Font font = null;
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResource("/utils/CarandaPersonalUse-qLOq.ttf").openStream());
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}   
+		genv.registerFont(font);
+		// make sure to derive the size
+		font = font.deriveFont(12f);
+		
+		Font customeFont = null;
+		try {
+			customeFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResource("/utils/Gabriola.ttf").openStream());
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}   
+		genv.registerFont(customeFont);
+		// make sure to derive the size
+		customeFont = customeFont.deriveFont(12f);
+		
 		//Setup the title of the application
 		JLabel labelSys = new JLabel("Login chat application");
 		labelSys.setHorizontalAlignment(SwingConstants.CENTER);
