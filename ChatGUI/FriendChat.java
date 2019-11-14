@@ -243,6 +243,7 @@ public class FriendChat extends JFrame {
 					while (true)
 					{
 						message = reader.readLine();
+						System.out.println(message);
 						chatArea.append(message);
 						chatArea.append("\n");
 					}
