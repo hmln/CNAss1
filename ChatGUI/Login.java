@@ -113,47 +113,24 @@ public class Login {
 		buttonLogin.setBackground(backGround);
 		buttonLogin.setBorder(new LineBorder(border, 1));
 		buttonLogin.setForeground(newBlue);
-		buttonLogin.setBounds(300, 295, 180, 35);
+		buttonLogin.setBounds(300, 270, 180, 35);
 		buttonLogin.addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					String username = user.getText();
-					char[] password = pass.getPassword();					
+					char[] password = pass.getPassword();
 					try {
-						Account result = UserDB.getJson(username);
-						if(result != null && Arrays.equals(password, result.getPassword())){
-							currentUser = result;
+						if (Validate.validateLogin(username, password))
+						{
 							currentUser.updateIp(InetAddress.getLocalHost().getHostAddress());
 							currentUser.updatePort(new Random().nextInt(10000)+1024);
-							Thread server = new Thread(){
-								 public void run()
-								 {
-									 try {
-										ownServer = new ServerChat(currentUser.getPort());
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-								 }
-							};
-							Thread client = new Thread() {
-								public void run()
-								{
-									try {
-										new ChooseChatMode();
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-									
-								}
-							};
-							server.start();
-							client.start();
+							initThread();
 							loginWindow.dispose();
 						}
-						else JOptionPane.showMessageDialog(null, "Invalid Login!", "Login Failed", JOptionPane.ERROR_MESSAGE);
-					} catch (IOException e) {
+						else reset();
+					} catch (HeadlessException | IOException e) {
 						e.printStackTrace();
-					}	 
+					}
 				}
 			}
 		);
@@ -163,7 +140,7 @@ public class Login {
 		JLabel notMem = new JLabel("Not a member yet?");
 		notMem.setFont(new Font("Gabriola", Font.PLAIN, 28));
 		notMem.setForeground(newGray);
-		notMem.setBounds(70, 375, 200, 43);
+		notMem.setBounds(70, 360, 200, 43);
 		loginWindow.getContentPane().add(notMem);
 		
 		//Setup for Registration
@@ -182,13 +159,33 @@ public class Login {
 					}
 				}
 		);
-		buttonReg.setBounds(240, 378, 125, 35);
+		buttonReg.setBounds(240, 363, 125, 35);
 		loginWindow.getContentPane().add(buttonReg);
-		
-		//Separator
-		JSeparator separator = new JSeparator();
-		separator.setBounds(28, 242, 484, 5);
-		loginWindow.setVisible(true);
+	}
+	public void initThread()
+	{
+		Thread server = new Thread(){
+			public void run()
+			{
+				try {
+					ownServer = new ServerChat(currentUser.getPort());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		Thread client = new Thread() {
+			public void run()
+			{
+				try {
+					new ChooseChatMode();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}						
+			}
+		};
+		server.start();
+		client.start();
 	}
 	public void reset()
 	{
