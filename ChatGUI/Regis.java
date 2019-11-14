@@ -122,22 +122,17 @@ public class Regis {
 					char[] repassword = pass2.getPassword();
 					try {
 						Account result = UserDB.getJson(username);
-						if (result != null)
-						{
-							JOptionPane.showMessageDialog(null, "Account existed", "Failed", JOptionPane.ERROR_MESSAGE);
-						}
-						else if (password.equals(repassword)) {
-							JOptionPane.showMessageDialog(null, "Wrong confirmation", "Failed", JOptionPane.ERROR_MESSAGE);
-						}
-						else
-						{
-							reset();
-							result = new Account(username, password);
-							UserDB.createJson(result);
-							JOptionPane.showMessageDialog(null, "Account created", "Success", JOptionPane.INFORMATION_MESSAGE);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
+							if (Validate.validateRegis(username, password, repassword))
+							{
+								reset();
+								result = new Account(username, password);
+								UserDB.createJson(result);
+								JOptionPane.showMessageDialog(null, "Account created", "Success", JOptionPane.INFORMATION_MESSAGE);
+							}
+					} catch (HeadlessException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					
@@ -157,12 +152,9 @@ public class Regis {
 		    buttonBack.setBorder(BorderFactory.createEmptyBorder());
 		    buttonBack.addActionListener(
 					new ActionListener() {
-						//When the user click on Back Button, return the Welcome Window
 						public void actionPerformed(ActionEvent event) {
-							//Check login right or wrong
 							new Login();
 							regWindow.dispose();
-							
 						}
 					}
 			);
