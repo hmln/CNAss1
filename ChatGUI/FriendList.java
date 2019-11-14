@@ -44,15 +44,15 @@ public class FriendList {
 		//Set up Label Friend List
 		friendLabel = new JLabel("Friend");
 		friendLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		friendLabel.setBounds(90, 60, 156, 16);
+		friendLabel.setBounds(100, 60, 156, 16);
 		friendLabel.setForeground(newBlue);
-		friendLabel.setFont(new Font("Segoe UI", Font.BOLD,15));
+		friendLabel.setFont(new Font("Segoe UI", Font.BOLD,18));
 		frame.getContentPane().add(friendLabel);
 		
 		//Set up JList for Friend List
 		friendList = new DefaultListModel<String>();
 		list = new JList<>(friendList);
-		list.setBounds(16, 85, 200, 200);
+		list.setBounds(16, 92, 340, 200);
 		list.setBorder(new LineBorder(newBlue, 1));
 		list.setFont(new Font("Segoe UI",Font.PLAIN,15));
 		for (String entry : Login.currentUser.getFriendList())
@@ -61,7 +61,7 @@ public class FriendList {
 		//Set up scroll pane for Friend List
 		JScrollPane scr = new JScrollPane(list);
 		scr.setBorder(BorderFactory.createEmptyBorder());
-		scr.setBounds(16,85,200,200);
+		scr.setBounds(16,92,340,200);
 		frame.getContentPane().add(scr);
 
 		//Setup Button Add
@@ -89,7 +89,7 @@ public class FriendList {
 		
 		//Setup Button Friend Request
 		requestButton = new JButton();
-		requestButton.setBounds(310, 50, 30, 30);
+		requestButton.setBounds(310, 50, 35, 35);
 		Image imgRequest = ImageIO.read(getClass().getResource("/utils/add-friend.png"));
 		requestButton.setIcon(new ImageIcon(imgRequest));
 		requestButton.setBackground(Color.WHITE);
@@ -99,14 +99,14 @@ public class FriendList {
 		
 		//Set up Label Chat
 		userLabel = new JLabel("User: " + user.getName());
-		userLabel.setFont(new Font("Segoe UI", Font.PLAIN,15));
+		userLabel.setFont(new Font("Segoe UI", Font.PLAIN,18));
 		userLabel.setBounds(16, 300, 250, 25);
 		userLabel.setForeground(blueAqua);
 		frame.getContentPane().add(userLabel);
 				
 		//Setup Button Return
 		returnButton = new JButton();
-		returnButton.setBounds(280, 300, 40, 40);
+		returnButton.setBounds(320, 295, 40, 40);
 		Image returnImage = ImageIO.read(getClass().getResource("/utils/log-out.png"));
 		returnButton.setIcon(new ImageIcon(returnImage));
 		returnButton.setBackground(Color.WHITE);
@@ -115,7 +115,7 @@ public class FriendList {
 		frame.getContentPane().add(returnButton);
 		
 		list.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg) {
+			public void mousePressed(MouseEvent arg) {
 				String value = (String)list.getModel().getElementAt(list.locationToIndex(arg.getPoint()));
 				try {
 					if (ServerChat.getUserlist().containsKey(value)) new FriendChat(value,0);
