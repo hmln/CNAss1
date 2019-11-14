@@ -27,9 +27,11 @@ public class ServerChat {
 				UserThread newUser = new UserThread(socket, this);
 				newUser.start();
 				addUser(newUser.getname(),newUser);
-				for (Map.Entry<String, UserThread> entry : clientList.entrySet()) {
-				    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
-				}
+				/*for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
+				{
+					System.out.println(user.getKey() + ", ");
+			    }*/
+				
 			}
 		} catch (IOException ex) 
 		{
@@ -56,13 +58,14 @@ public class ServerChat {
 	{
 		return clientList;
 	}
-	void announce(String message, String destination) throws IOException
+	void announce(String message, UserThread userThread) throws IOException
 	{
 		for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
 		{
-			if (user.getKey().equals(destination))
+			if (user.getValue().equals(userThread))
 			{
-				user.getValue().sendMessage(message);
+				userThread.sendMessage(message);
+				//System.out.println(userThread.getname());
 				return;
 			}
 	    }

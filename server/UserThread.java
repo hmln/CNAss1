@@ -26,23 +26,18 @@ public class UserThread extends Thread{
 			username = reader.readLine();
 			server.addUser(username, this);
 			String message = "";
-
+			//a:abc
 			while (!message.equals("quit"))
 			{
+				//bbb:aaa:Hello
 				String get = reader.readLine();
 				int pos = get.indexOf(':');
-				if (pos == 1) 
-				{
-					destination = Character.toString(get.charAt(0));
-				}
-				else destination = get.substring(0, pos);
-				System.out.println(pos);	
-				System.out.println(get);
-				message = get.substring(pos+1);
+				if (pos == -1) continue;
+				destination = get.substring(0, pos);
+				System.out.println(pos);
 				System.out.println(destination);
-				System.out.println(message);
-				//server.announce(message,destination);
-				//server.announce(message,this);
+				message = get.substring(pos+1);
+				server.announce(message,server.findUser(destination));
 			}
 			server.removeUser(username,this);
 			socket.close();
@@ -56,7 +51,6 @@ public class UserThread extends Thread{
 	void sendMessage(String message) throws IOException 
 	{
         writer.println(message);
-        writer.flush();
     }
 	public String getname()
 	{
