@@ -115,10 +115,10 @@ public class FriendList {
 		frame.getContentPane().add(returnButton);
 		
 		list.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent arg) {
+			public void mouseClicked(MouseEvent arg) {
 				String value = (String)list.getModel().getElementAt(list.locationToIndex(arg.getPoint()));
 				try {
-					if (ServerChat.getUserlist().containsKey(value)) new FriendChat(value,0);
+					if (ServerChat.getUserlist().containsKey(value + ":" + user.getName())) new FriendChat(value,0);
 					else new FriendChat(value);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -128,57 +128,15 @@ public class FriendList {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String destination = friendInput.getText();
-				try {
-					//dont add yourself
-					if (destination.equals(user.getName())) JOptionPane.showMessageDialog(null, "Why add yourself duh", "Lmao", JOptionPane.ERROR_MESSAGE);
-					else
-					{
-						Account result = UserDB.getJson(destination);
-						//no account matched
-						if (result == null) JOptionPane.showMessageDialog(null, "Invalid account!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//account is already friend
-						else if (user.isFriend(result.getName())) JOptionPane.showMessageDialog(null, "Account is already your friend!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//account is in request
-						else if (result.inRequest(user.getName())) JOptionPane.showMessageDialog(null, "Already requested!", "Failed", JOptionPane.ERROR_MESSAGE);
-						else if (user.inRequest(result.getName())) JOptionPane.showMessageDialog(null, "User is in request list!", "Lol", JOptionPane.INFORMATION_MESSAGE);
-						//else
-						else
-						{
-							result.addRequest(user.getName());
-							JOptionPane.showMessageDialog(null, "Request success!", "OK", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				Validate.validateAddFriend(user,destination);
 				friendInput.setText(null);			
 			}
 		});
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String destination = friendInput.getText();
-				try {
-					//dont remove yourself
-					if (destination.equals(user.getName())) JOptionPane.showMessageDialog(null, "Why remove yourself duh", "Lmao", JOptionPane.ERROR_MESSAGE);
-					else 
-					{
-						Account result = UserDB.getJson(destination); 
-						//account not exist
-						if (result == null) JOptionPane.showMessageDialog(null, "Invalid account!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//not your friend
-						else if (!user.isFriend(result.getName())) JOptionPane.showMessageDialog(null, "Account is not your friend!", "Failed", JOptionPane.ERROR_MESSAGE);
-						//else
-						else
-						{
-							result.removeFriend(user.getName());
-							user.removeFriend(result.getName());
-							friendUpdate();
-							JOptionPane.showMessageDialog(null, "Remove success!", "OK", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				Validate.validateRemoveFriend(user, destination);
+				friendUpdate();
 				friendInput.setText(null);
 			}
 		});
@@ -186,10 +144,14 @@ public class FriendList {
 			public void actionPerformed(ActionEvent e) {
 				requestForm form = new requestForm();
 				form.setVisible(true);
-				friendUpdate();
+				form.addWindowListener(new java.awt.event.WindowAdapter() {
+				    @Override
+				    public void windowClosing(WindowEvent windowEvent) {
+				        friendUpdate();
+				    }
+				});
 			}
 		});
-		frame.setVisible(true);
 		returnButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -200,6 +162,7 @@ public class FriendList {
 				frame.dispose();
 			}
 		});
+		frame.setVisible(true);
 	}
 	void friendUpdate()
 	{
@@ -208,3 +171,4 @@ public class FriendList {
 			friendList.addElement(entry);
 	}
 }
+
