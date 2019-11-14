@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import data.Account;
-import data.UserDB;
 import server.ServerChat;
 import utils.RoundJTextField;
+import utils.Validate;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -45,30 +45,25 @@ public class Login {
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResource("/utils/CarandaPersonalUse-qLOq.ttf").openStream());
 		} catch (FontFormatException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}   
 		genv.registerFont(font);
-		// make sure to derive the size
 		font = font.deriveFont(12f);
 		
-		Font customeFont = null;
+		/*Font customeFont = null;
 		try {
 			customeFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResource("/utils/Gabriola.ttf").openStream());
 		} catch (FontFormatException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}   
 		genv.registerFont(customeFont);
 		// make sure to derive the size
 		customeFont = customeFont.deriveFont(12f);
-		
+		*/
 		//Setup the title of the application
 		JLabel labelSys = new JLabel("Login chat application");
 		labelSys.setHorizontalAlignment(SwingConstants.CENTER);
@@ -122,6 +117,7 @@ public class Login {
 					try {
 						if (Validate.validateLogin(username, password))
 						{
+							//String ip = getHostIp();
 							currentUser.updateIp(InetAddress.getLocalHost().getHostAddress());
 							currentUser.updatePort(new Random().nextInt(10000)+1024);
 							initThread();
@@ -192,4 +188,29 @@ public class Login {
 		user.setText(null);
 		pass.setText(null);
 	}
+	/*public String getHostIp()
+	{
+		String ip = "";
+	    try {
+	        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+	        while (interfaces.hasMoreElements()) {
+	            NetworkInterface iface = interfaces.nextElement();
+	            if (iface.isLoopback() || !iface.isUp())
+	                continue;
+
+	            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+	            while(addresses.hasMoreElements()) {
+	                InetAddress addr = addresses.nextElement();
+
+	                if (addr instanceof Inet6Address) continue;
+
+	                ip = addr.getHostAddress();
+	                System.out.println(iface.getDisplayName() + " " + ip);
+	            }
+	        }
+	    } catch (SocketException e) {
+	        throw new RuntimeException(e);
+	    }
+	    return ip;
+	}*/
 }

@@ -1,5 +1,7 @@
 package ChatGUI;
 import utils.RoundJTextField;
+import utils.Validate;
+
 import java.awt.*;
 
 import javax.imageio.ImageIO;
@@ -9,7 +11,6 @@ import data.Account;
 import data.UserDB;
 
 import java.awt.event.*;
-import java.io.IOException;
 
 public class Regis {
 	JFrame regWindow;
@@ -100,7 +101,7 @@ public class Regis {
 		//Set up Sign up button
 		JButton buttonSignUp = new JButton();
 		try {
-		    Image imgSignUp = ImageIO.read(getClass().getResource("/utils/correct (2).png"));
+		    Image imgSignUp = ImageIO.read(getClass().getResource("/utils/correct.png"));
 		    buttonSignUp.setIcon(new ImageIcon(imgSignUp));
 		    buttonSignUp.setBounds(490, 305, 70, 70);
 		    buttonSignUp.setBackground(Color.WHITE);
@@ -153,7 +154,8 @@ public class Regis {
 		    buttonBack.addActionListener(
 					new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
-							new Login();
+							Login login = new Login();
+							login.loginWindow.setVisible(true);
 							regWindow.dispose();
 						}
 					}

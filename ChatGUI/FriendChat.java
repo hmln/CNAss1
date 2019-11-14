@@ -4,9 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 
-import utils.RoundedBorder;
+import utils.*;
+
 import javax.swing.border.LineBorder;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.*;
@@ -32,6 +34,7 @@ public class FriendChat extends JFrame {
 	private String hostname;
 	private int port;
 	private PrintWriter writer;
+	private OutputStream output;
 	private Socket socket = null;
 	
 	private volatile String message = "";
@@ -44,7 +47,7 @@ public class FriendChat extends JFrame {
 			hostname = this.partner.getIp();
 			port = this.partner.getPort();
 			socket = new Socket(hostname, port);
-			OutputStream output = socket.getOutputStream();
+			output = socket.getOutputStream();
 			writer = new PrintWriter(output,true);
 			writer.println(user.getName());
 			writer.println(this.partner.getName());
@@ -60,7 +63,7 @@ public class FriendChat extends JFrame {
 		try {
 			this.partner = UserDB.getJson(partner);
 			socket = new Socket(user.getIp(),user.getPort());
-			OutputStream output = socket.getOutputStream();
+			output = socket.getOutputStream();
 			writer = new PrintWriter(output,true);
 			writer.println(user.getName());
 			writer.println(this.partner.getName());
@@ -257,9 +260,15 @@ public class FriendChat extends JFrame {
 					while (true)
 					{
 						message = reader.readLine();
-						System.out.println(message);
-						chatArea.append(message);
-						chatArea.append("\n");
+						if (message.equals("file"))
+						{
+							receiveFile(input);
+						}
+						else
+						{
+							chatArea.append(message);
+							chatArea.append("\n");
+						}
 					}
 				} catch (Exception e){
 					e.printStackTrace();
@@ -314,7 +323,12 @@ public class FriendChat extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				requestForm form = new requestForm();
 				form.setVisible(true);
-				friendUpdate();
+				form.addWindowListener(new java.awt.event.WindowAdapter() {
+				    @Override
+				    public void windowClosing(WindowEvent windowEvent) {
+				        friendUpdate();
+				    }
+				});
 			}
 		});
 		sendMessage.addKeyListener(new KeyAdapter() {
@@ -347,13 +361,20 @@ public class FriendChat extends JFrame {
 				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				jfc.setDialogTitle("Select an image");
 				jfc.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images only", "png", "jpeg");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images only", "png", "jpeg","jpg");
 				jfc.addChoosableFileFilter(filter);
 
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					System.out.println(jfc.getSelectedFile().getPath());//Test only
-					//Note: change into transferring the image file
+					writer.println("file");
+					String path = jfc.getSelectedFile().getPath();
+					try {
+						sendFile(path);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+				} catch (Exception e1) {
+						e1.printStackTrace();
+				}
 				}
 			}
 		});
@@ -367,9 +388,16 @@ public class FriendChat extends JFrame {
 
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					System.out.println(jfc.getSelectedFile().getPath());//Test only
-					//Note: change into transferring the document file
+					writer.println("file");
+					String path = jfc.getSelectedFile().getPath();
+					try {
+						sendFile(path);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+				} catch (Exception e1) {
+						e1.printStackTrace();
 				}
+			}
 			}
 		});
 		musicButton.addActionListener(new ActionListener() {
@@ -377,13 +405,20 @@ public class FriendChat extends JFrame {
 				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				jfc.setDialogTitle("Select a mp3 file");
 				jfc.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Mp3 only", "mp3");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Music only", "mp3","ogg","wav");
 				jfc.addChoosableFileFilter(filter);
 
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					System.out.println(jfc.getSelectedFile().getPath());//Test only
-					//Note: change into transferring the mp3 file
+					writer.println("file");
+					String path = jfc.getSelectedFile().getPath();
+					try {
+						sendFile(path);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+				} catch (Exception e1) {
+						e1.printStackTrace();
+				}
 				}
 			}
 		});
@@ -394,12 +429,15 @@ public class FriendChat extends JFrame {
 
 				int returnValue = jfc.showDialog(null, "Choose");
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					System.out.println(jfc.getSelectedFile().getPath());//Test only
+					writer.println("file");
+					String path = jfc.getSelectedFile().getPath();
 					try {
-						sendFile(jfc.getSelectedFile().getPath().toString());
+						sendFile(path);
 					} catch (IOException e1) {
 						e1.printStackTrace();
-					}
+				} catch (Exception e1) {
+						e1.printStackTrace();
+				}
 				}
 			}
 		});
@@ -411,15 +449,34 @@ public class FriendChat extends JFrame {
 		for (String entry : user.getFriendList())
 			friendList.addElement(entry);
 	}
-	void sendFile(String path) throws IOException
-	{
-		byte[] mybytearray = new byte[1024];
-        InputStream is = socket.getInputStream();
-        FileOutputStream fos = new FileOutputStream(path);
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        int bytesRead = is.read(mybytearray, 0, mybytearray.length);
-        bos.write(mybytearray, 0, bytesRead);
-        bos.close();
-
+	
+	public void sendFile(String path) throws Exception {
+		DataOutputStream cout=new DataOutputStream(output);
+		File file=new File(path);
+		cout.writeUTF(file.getName());
+		FileInputStream fis=new FileInputStream(file);
+		int letter;
+		do
+		{
+			letter=fis.read();
+			cout.writeUTF(String.valueOf(letter));
+		} while(letter!=-1);
+		fis.close();
 	}
+	public void receiveFile(InputStream input) throws Exception {
+		DataInputStream cin =new DataInputStream(input);
+		String filename = cin.readUTF();
+		String home = System.getProperty("user.home");
+    	String destination = home + "/Downloads/" + filename;
+    	File file=new File(destination);
+		FileOutputStream fout=new FileOutputStream(file);
+		int letter;
+		do
+		{
+			letter =Integer.parseInt(cin.readUTF());
+		if (letter!=-1) fout.write(letter);
+		}while(letter!=-1);
+		fout.close();
+		chatArea.append(partner.getName() + ": I just send you a file name: "+filename+", please check at your download");
+    }
 }

@@ -9,9 +9,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import data.Account;
-import data.UserDB;
 import server.ServerChat;
 import utils.RoundedBorder;
+import utils.Validate;
 
 public class FriendList {
 	JFrame frame;
