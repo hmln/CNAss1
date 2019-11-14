@@ -38,7 +38,7 @@ public class Regis {
 		regWel.setHorizontalAlignment(SwingConstants.CENTER);
 		regWel.setForeground(newBlue);
 		regWel.setFont(new Font("Caranda Personal Use", Font.PLAIN, 48));
-		regWel.setBounds(260, 40, 484, 100);
+		regWel.setBounds(280, 40, 484, 100);
 		
 		//regWel.setBorder(new LineBorder(newBlue, 1));
 		regWindow.getContentPane().add(regWel);
@@ -57,7 +57,7 @@ public class Regis {
 		JLabel regUser = new JLabel("Username:");
 		regUser.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regUser.setForeground(newBlue);
-		regUser.setBounds(182, 160, 172, 37);
+		regUser.setBounds(232, 160, 172, 37);
 		//regUser.setBorder(new LineBorder(newBlue, 1));
 		regWindow.getContentPane().add(regUser);
 		
@@ -65,7 +65,7 @@ public class Regis {
 		user = new RoundJTextField(20);
 		user.setFont(new Font("Calibri", Font.PLAIN, 24));
 		user.setForeground(newBlue);
-		user.setBounds(340,160, 360, 30);
+		user.setBounds(390,160, 360, 30);
 		regWindow.getContentPane().add(user);
 		user.setColumns(10);
 		
@@ -73,28 +73,28 @@ public class Regis {
 		JLabel regPass = new JLabel("Password:");
 		regPass.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regPass.setForeground(newBlue);
-		regPass.setBounds(190, 205, 172, 43);
+		regPass.setBounds(240, 205, 172, 43);
 		regWindow.getContentPane().add(regPass);
 		
 		//Setup for password's input
 		pass = new JPasswordField();
 		pass.setFont(new Font("Calibri", Font.PLAIN, 28));
 		pass.setForeground(newBlue);
-		pass.setBounds(340, 208, 360, 30);
+		pass.setBounds(390, 208, 360, 30);
 		regWindow.getContentPane().add(pass);
 		
 		//Set up for Password Label
 		JLabel regPass2 = new JLabel("Confirm password:");
 		regPass2.setFont(new Font("Gabriola", Font.BOLD, 32));
 		regPass2.setForeground(newBlue);
-		regPass2.setBounds(85, 250, 292, 43);
+		regPass2.setBounds(135, 250, 292, 43);
 		regWindow.getContentPane().add(regPass2);
 				
 		//Setup for password's input
 		pass2 = new JPasswordField();
 		pass2.setFont(new Font("Calibri", Font.PLAIN, 28));
 		pass2.setForeground(newBlue);
-		pass2.setBounds(340, 258, 360, 30);
+		pass2.setBounds(390, 258, 360, 30);
 		regWindow.getContentPane().add(pass2);
 		
 		//Set up Sign up button
@@ -102,7 +102,7 @@ public class Regis {
 		try {
 		    Image imgSignUp = ImageIO.read(getClass().getResource("/utils/correct.png"));
 		    buttonSignUp.setIcon(new ImageIcon(imgSignUp));
-		    buttonSignUp.setBounds(440, 305, 70, 70);
+		    buttonSignUp.setBounds(490, 305, 70, 70);
 		    buttonSignUp.setBackground(Color.WHITE);
 		    buttonSignUp.setFocusPainted(false);
 		    buttonSignUp.setBorder(BorderFactory.createEmptyBorder());

@@ -107,14 +107,14 @@ public class FriendChat extends JFrame {
 		//Setup Button Add
 		addButton = new JButton("Add");
 		addButton.setBorder(new RoundedBorder(8));
-		addButton.setBounds(455, 8, 70, 25);
+		addButton.setBounds(385, 8, 70, 25);
 		addButton.setBackground(Color.WHITE);
 		addButton.setForeground(newBlue);
 		frame.getContentPane().add(addButton);
 		
 		//Setup Button Remove
 		removeButton = new JButton("Remove");
-		removeButton.setBounds(530, 8, 100, 25);
+		removeButton.setBounds(460, 8, 100, 25);
 		removeButton.setBorder(new RoundedBorder(8));
 		removeButton.setBackground(Color.WHITE);
 		removeButton.setForeground(wineRed);
@@ -132,14 +132,14 @@ public class FriendChat extends JFrame {
 		
 		//Setup Friendname Input
 		friendInput = new JTextField();
-		friendInput.setBounds(273, 8, 178, 26);
+		friendInput.setBounds(200, 8, 178, 26);
 		friendInput.setBorder(new RoundedBorder(5));
 		friendInput.setColumns(10);
 		frame.getContentPane().add(friendInput);
 		
 		//Set up Label Chat
 		userLabel = new JLabel("User " + user.getName() + " chat with " + partner.getName());
-		userLabel.setFont(new Font("Caranda Personal Use", Font.PLAIN,22));
+		userLabel.setFont(new Font("Gabriola", Font.BOLD,22));
 		userLabel.setBounds(200, 55, 350, 50);
 		userLabel.setForeground(blueAqua);
 		frame.getContentPane().add(userLabel);

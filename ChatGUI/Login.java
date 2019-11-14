@@ -27,7 +27,7 @@ public class Login {
 	private void init() {
 		//Set up the window chat
 		loginWindow = new JFrame("Log In To The Nonsense Chat Application");
-		loginWindow.setBounds(480, 480, 720, 480);
+		loginWindow.setBounds(640, 320, 720, 480);
 		loginWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		loginWindow.getContentPane().setLayout(null);
 		loginWindow.getContentPane().setBackground(Color.WHITE);
@@ -43,28 +43,28 @@ public class Login {
 		labelSys.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSys.setForeground(newBlue);
 		labelSys.setFont(new Font("Caranda Personal Use", Font.PLAIN, 40));
-		labelSys.setBounds(120, 50, 484, 66);
+		labelSys.setBounds(135, 70, 484, 70);
 		loginWindow.getContentPane().add(labelSys);
 		
 		//Create the text field tell the user to input Username
 		JLabel labelUser = new JLabel("Username:");
 		labelUser.setFont(new Font("Gabriola", Font.BOLD, 36));
 		labelUser.setForeground(newBlue);
-		labelUser.setBounds(70, 148, 172, 37);
+		labelUser.setBounds(70, 168, 172, 37);
 		loginWindow.getContentPane().add(labelUser);
 		
 		//Create the text field tell the user to input Password
 		JLabel labelPass = new JLabel("Password:");
 		labelPass.setFont(new Font("Gabriola", Font.BOLD, 36));
 		labelPass.setForeground(newBlue);
-		labelPass.setBounds(70, 208, 172, 43);
+		labelPass.setBounds(70, 228, 172, 43);
 		loginWindow.getContentPane().add(labelPass);
 		
 		//Set up for username input
 		user = new RoundJTextField(30);
 		user.setFont(new Font("Calibri", Font.PLAIN, 24));
 		user.setForeground(newBlue);
-		user.setBounds(241, 150, 360, 35);
+		user.setBounds(241, 170, 360, 35);
 		loginWindow.getContentPane().add(user);
 		user.setColumns(10);
 		
@@ -72,7 +72,7 @@ public class Login {
 		pass = new JPasswordField();
 		pass.setFont(new Font("Calibri", Font.PLAIN, 28));
 		pass.setForeground(newBlue);
-		pass.setBounds(241, 210, 360, 35);
+		pass.setBounds(241, 230, 360, 35);
 		loginWindow.getContentPane().add(pass);
 		
 		//Set up contents of the Login Button and EventHandler
@@ -82,7 +82,7 @@ public class Login {
 		buttonLogin.setBackground(backGround);
 		buttonLogin.setBorder(new LineBorder(border, 1));
 		buttonLogin.setForeground(newBlue);
-		buttonLogin.setBounds(300, 270, 180, 35);
+		buttonLogin.setBounds(300, 295, 180, 35);
 		buttonLogin.addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
@@ -132,7 +132,7 @@ public class Login {
 		JLabel notMem = new JLabel("Not a member yet?");
 		notMem.setFont(new Font("Gabriola", Font.PLAIN, 28));
 		notMem.setForeground(newGray);
-		notMem.setBounds(70, 360, 200, 43);
+		notMem.setBounds(70, 375, 200, 43);
 		loginWindow.getContentPane().add(notMem);
 		
 		//Setup for Registration
@@ -151,7 +151,7 @@ public class Login {
 					}
 				}
 		);
-		buttonReg.setBounds(240, 363, 125, 35);
+		buttonReg.setBounds(240, 378, 125, 35);
 		loginWindow.getContentPane().add(buttonReg);
 		
 		//Separator

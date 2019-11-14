@@ -116,7 +116,7 @@ public class ChooseChatMode {
 		JLabel notAccount = new JLabel("Not Your Account?");
 		notAccount.setFont(new Font("Gabriola", Font.PLAIN, 30));
 		notAccount.setForeground(newGray);
-		notAccount.setBounds(335, 360, 200, 43);
+		notAccount.setBounds(355, 360, 200, 43);
 		mainWindow.getContentPane().add(notAccount);
 		
 		//Setup for Logout
@@ -136,7 +136,7 @@ public class ChooseChatMode {
 					}
 				}
 		);
-		logOut.setBounds(515, 363, 80, 35);
+		logOut.setBounds(535, 363, 80, 35);
 		mainWindow.getContentPane().add(logOut);
 		mainWindow.setVisible(true);
 	}
