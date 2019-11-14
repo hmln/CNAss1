@@ -50,12 +50,21 @@ public class ServerChat {
 		return clientList;
 	}
 	
-	void announce(String message, UserThread userThread) throws IOException
+	void announce(String message, UserThread user) throws IOException
 	{
-		for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
-			if (user.getValue().equals(userThread))
+		for (Map.Entry<String,UserThread> entry : clientList.entrySet()) 
+			if (entry.getValue().equals(user))
 			{
-				userThread.sendMessage(message);
+				user.sendMessage(message);
+				return;
+			}
+	}
+
+	public void forwardFile(String path, UserThread user) throws Exception {
+		for (Map.Entry<String,UserThread> entry : clientList.entrySet()) 
+			if (entry.getValue().equals(user))
+			{
+				user.sendFile(path);
 				return;
 			}
 	}
