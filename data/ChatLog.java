@@ -4,32 +4,30 @@ import java.io.IOException;
 import java.util.*;
 
 public class ChatLog {
-	public int currentID = 0;
-	public static int nextID = 1;
+	private int token;
 	
 	private Queue<String> messageList = new LinkedList<>();
 	private final int maxMessage = 1000;
 	
-	public ChatLog() throws IOException
+	public ChatLog(int number) throws IOException
 	{
-		currentID = nextID;
-		nextID++;
+		token = number;
 		LogDB.createJson(this);
 	}
 	public void addMessage(String message) throws IOException
 	{
 		messageList.add(message);
-		LogDB.createJson(this);
 		if (messageList.size() == maxMessage) messageList.remove();
-	}
-	public String removeMessage()
-	{
-		if (!messageList.isEmpty()) return messageList.remove();
-		else return "";
+		LogDB.createJson(this);
 	}
 	
 	public int getID()
 	{
-		return currentID;
+		return token;
+	}
+	
+	public Queue<String> getMessage()
+	{
+		return messageList;
 	}
 }
