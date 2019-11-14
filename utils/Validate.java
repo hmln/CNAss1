@@ -54,7 +54,7 @@ public class Validate {
 	}
 	public static boolean validateAccount(String username) throws IOException
 	{
-		return UserDB.getJson(username).equals(null);
+		return UserDB.getJson(username) == null;
 	}
 	public static void validateAddFriend(Account myAccount, String friend)
 	{
