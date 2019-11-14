@@ -3,17 +3,14 @@ package server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import data.ChatLog;
 
 public class ServerChat {
 	private int port;
 	private volatile static Map<String,UserThread> clientList; 
-	private ChatLog log = null;
 	public ServerChat(int port) throws IOException
 	{
 		this.port = port;
 		clientList = new HashMap<String,UserThread>();
-		log = new ChatLog();
 		exe();
 	}
 	
@@ -26,15 +23,9 @@ public class ServerChat {
 				Socket socket = server.accept();
 				UserThread newUser = new UserThread(socket, this);
 				newUser.start();
-				addUser(newUser.getname(),newUser);
-				/*for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
-				{
-					System.out.println(user.getKey() + ", ");
-			    }*/
-				
+				addUser(newUser.getToken(),newUser);
 			}
-		} catch (IOException ex) 
-		{
+		} catch (IOException ex) {
             System.out.println("Error in the server: " + ex.getMessage());
         }
 	}
@@ -58,20 +49,14 @@ public class ServerChat {
 	{
 		return clientList;
 	}
+	
 	void announce(String message, UserThread userThread) throws IOException
 	{
 		for (Map.Entry<String,UserThread> user : clientList.entrySet()) 
-		{
 			if (user.getValue().equals(userThread))
 			{
 				userThread.sendMessage(message);
-				//System.out.println(userThread.getname());
 				return;
 			}
-	    }
-	}
-	public void addMessagetoLog(String message) throws IOException
-	{
-		log.addMessage(message);
 	}
 }

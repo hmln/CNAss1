@@ -3,12 +3,17 @@ package server;
 import java.io.*;
 import java.net.*;
 
+import data.ChatLog;
+import data.LogDB;
+import utils.StrToInt;
+
 public class UserThread extends Thread{
 	private Socket socket;
 	private ServerChat server;
 	private PrintWriter writer;
 	private String username = "";
-	private String destination = "";
+	private String partner = "";
+	private ChatLog log;
 	public UserThread(Socket socket, ServerChat server) 
 	{
         this.socket = socket;
@@ -24,20 +29,19 @@ public class UserThread extends Thread{
 			OutputStream output = socket.getOutputStream();
 			writer = new PrintWriter(output,true);
 			username = reader.readLine();
-			server.addUser(username, this);
+			partner = reader.readLine();
+			server.addUser(username + ":" + partner, this);
 			String message = "";
-			//a:abc
+			int logID = StrToInt.toInt(username) + StrToInt.toInt(partner);
 			while (!message.equals("quit"))
 			{
-				//bbb:aaa:Hello
-				String get = reader.readLine();
-				int pos = get.indexOf(':');
-				if (pos == -1) continue;
-				destination = get.substring(0, pos);
-				System.out.println(pos);
-				System.out.println(destination);
-				message = get.substring(pos+1);
-				server.announce(message,server.findUser(destination));
+				message = reader.readLine();
+				if (!message.equals("")) 
+				{
+					server.announce(message,server.findUser(partner + ":" + username));
+					log = LogDB.getJson(logID);
+					log.addMessage(message);
+				}
 			}
 			server.removeUser(username,this);
 			socket.close();
@@ -52,8 +56,8 @@ public class UserThread extends Thread{
 	{
         writer.println(message);
     }
-	public String getname()
+	public String getToken()
 	{
-		return username;
+		return username + ":" + partner;
 	}
 }
