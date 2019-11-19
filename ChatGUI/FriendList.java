@@ -17,10 +17,11 @@ public class FriendList {
 	JFrame frame;
 	private JLabel friendLabel, userLabel;
 	private static JList<String> list;
-	private JButton addButton, removeButton,requestButton,returnButton;
+	private JButton addButton, removeButton,requestButton,returnButton, refreshButton;
 	private JTextField friendInput;
 	Account user = Login.currentUser;
 	DefaultListModel<String> friendList = null;
+	
 	
 	public FriendList() throws Exception {
 		initialize();
@@ -86,6 +87,16 @@ public class FriendList {
 		friendInput.setBorder(new RoundedBorder(5));
 		friendInput.setColumns(10);
 		frame.getContentPane().add(friendInput);
+		
+		//Set up Button Refresh 
+		refreshButton = new JButton();
+		refreshButton.setBounds(16, 55, 25, 25);
+		Image imgRefresh = ImageIO.read(getClass().getResource("/utils/refresh.png"));
+		refreshButton.setIcon(new ImageIcon(imgRefresh));
+		refreshButton.setBackground(Color.WHITE);
+		refreshButton.setFocusPainted(false);
+		refreshButton.setBorder(BorderFactory.createEmptyBorder());
+		frame.getContentPane().add(refreshButton);
 		
 		//Setup Button Friend Request
 		requestButton = new JButton();

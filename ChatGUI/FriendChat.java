@@ -23,7 +23,7 @@ public class FriendChat extends JFrame {
 	private JLabel friendLabel, userLabel;
 	private static JList<String> list;
 	private JTextField friendInput;
-	private JButton addButton,returnButton,removeButton,requestButton,sendButton,pictureButton, docButton, musicButton;
+	private JButton addButton,returnButton,removeButton,requestButton,sendButton,pictureButton, docButton, musicButton, refreshButton;
 	private volatile JTextArea chatArea;
 	private JTextArea sendMessage;
 	private JScrollPane scroll_bar;
@@ -174,6 +174,16 @@ public class FriendChat extends JFrame {
 		scroll_bar.setBounds(192,110,480,303);
 		scroll_bar.setBorder(BorderFactory.createEmptyBorder());
 		frame.getContentPane().add(scroll_bar);
+		
+		//Set up Button Refresh 
+		refreshButton = new JButton();
+		refreshButton.setBounds(16, 0, 24, 24);
+		Image imgRefresh = ImageIO.read(getClass().getResource("/utils/refresh.png"));
+		refreshButton.setIcon(new ImageIcon(imgRefresh));
+		refreshButton.setBackground(Color.WHITE);
+		refreshButton.setFocusPainted(false);
+		refreshButton.setBorder(BorderFactory.createEmptyBorder());
+		frame.getContentPane().add(refreshButton);
 		
 		//Setup Button Friend Request
 		requestButton = new JButton();
