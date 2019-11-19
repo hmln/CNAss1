@@ -50,7 +50,7 @@ public class requestForm extends JFrame {
 		list.setBounds(16, 34, 402, 194);
 		
 		//Setup Accept Button
-		JButton accept = new JButton("accept");
+		JButton accept = new JButton("Accept");
 		accept.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				try {
@@ -71,8 +71,20 @@ public class requestForm extends JFrame {
 		accept.setBorder(new RoundedBorder(8));
 		contentPane.add(accept);
 		
+		//Setup Refresh Button
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) { 
+				try {
+					//Setup lai update cai friend request form
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		//Setup Remove Button
-		JButton removeButton = new JButton("remove");
+		JButton removeButton = new JButton("Remove");
 		removeButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) { 
 				try {
