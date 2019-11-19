@@ -77,11 +77,19 @@ public class requestForm extends JFrame {
 			public void mousePressed(MouseEvent e) { 
 				try {
 					//Setup lai update cai friend request form
+					user.removeRequest(list.getSelectedValue());
+					dlm.removeElementAt(list.getSelectedIndex());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
+		refreshButton.setBounds(170, 240, 100, 29);
+		refreshButton.setEnabled(false);
+		refreshButton.setFocusPainted(false);
+		refreshButton.setBackground(Color.WHITE);
+		refreshButton.setBorder(new RoundedBorder(8));
+		contentPane.add(refreshButton);
 		
 		//Setup Remove Button
 		JButton removeButton = new JButton("Remove");
