@@ -16,6 +16,57 @@
 ## **1. Data:**
 
 ## **2. DataServer:**
+This package is used for storing the information of all users including their information account and chat log between other users.
+It also has 4 small packages inside.
+
+   **Data Package:**
+  
+   **1.	Account.java:**
+   
+    This class used for setting up the user account including the friend list, friend request, username, password; ip, port of his/her own p2p server and status (online or offline).
+    
+   **2.	Chatlog.java:**
+   
+    This class will create the chat log of the user and others, each pair of them has a unique id to distinct with other users.
+    
+   **3.	LogDB.java:**
+   
+    This class will create and get the json file (with the ID) to store the chat log.
+    
+   **4.	UserDB.java:**
+   
+    This class will create the json and also get the json file for creating the user account information.
+
+  **Server:**
+  
+  **1.	DataServer.java:**
+  	
+    This class used for operating the data server.
+   
+  **2.	DataThread.java:**
+  	
+    This class used for handling multi-users access to the data server and use the application.
+
+  **Utils:**
+  
+  **1.	Checker.java:**
+  	
+    This class is used for checking the data from user satisfying certain condition to do something.
+  	If something is wrong, it will return the error to Handling.
+   
+  **2.	Handling.java:**
+  
+    This class is used to categorizing the data from user, each type call a method from Checker.java to get the result.
+  	If result is an error, it will return that error to the user.
+   
+  **3.	MakePath.java:**
+  	
+    Same as MakePath.java in P2PServer
+   
+  **4.	ServerUtils.java:**
+  	
+    This class converts some data of a kind to another kind.
+
 
 ## **3. GUI:**
 
@@ -35,9 +86,22 @@ This package contains 7 classes which are:
 
 This package contains 4 classes which are:
   * **DataSocket:**
+  
+        This class has the constructor used for connecting with the server to get the data and the rest is the methods which used for interacting with the database in the server.
+
   * **MakePath:**
+  
+        This class will create the folder or file for storing data (in P2P side, storing files) 
+  
   * **P2PServer:**
+  
+        This class is used for making the P2P server for the client to use the application.
+  
+        The rest is the methods which are used for modifying the User list in the server such as removeUser, addUser, findUser, also used for forwarding file and send the message.
+
   * **P2PThread:**
+  
+        This class used for multi thread programming to handle with many users use the server also the user can chat, send file, receive with other users at the same time.
   
 ## **5. Utils:**
 
@@ -60,7 +124,7 @@ This package contains all images used for setting up buttons, custom fonts and c
 >* If you intentionally add an account twice, the system will announce you.
 
 **More details:** 
-[Report of The Assignment](https://tinyurl.com/CNAssignmentOne)
+[Report of The Assignment](https://tinyurl.com/CNAssOne)
 
 ## What We Need To Improve:
 >* Need an online server for easier accessing the application.
@@ -73,11 +137,11 @@ This package contains all images used for setting up buttons, custom fonts and c
 
 # Contributors:
 
-|Name            | Work                                                                                           |
-|:---------------|------------------------------------------------------------------------------------------------|
-|**Hoàng Thịnh** | Back-End, Rearrange Code, Final Quality Control on Documentation (Report)                      |
+|Name            | Work                                                                                   |
+|:---------------|----------------------------------------------------------------------------------------|
+|**Hoàng Thịnh** | Back-End, Rearrange Code, Final Quality Control on Documentation (Report)              |
 |**Hạ Mỹ**       | Front-End, Final Quality Control on Design GUI, Documentation (Report and Git)         |
-|**Hoàng Trí**   | Front-End, Documentation (Report)                                                              |
+|**Hoàng Trí**   | Front-End, Documentation (Report)                                                      |
 
 # Disclaimer:
 ## The Custom Classes and Fonts:
