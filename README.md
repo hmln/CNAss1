@@ -1,6 +1,6 @@
 # The Computer Networks - Assignment 1: Chat Application
 
->This Assignment's requirements are: 
+>This Assignment's Requirements are: 
 >* Building a chat application using the TCP/IP Protocol.
 >* Can allow 2 users on 2 different machines to chat with each other.
 >* The user can chat with different people at the same time.
@@ -10,8 +10,8 @@
 >* User can view online/offline friend.
 >* User can add or remove friend in the friend list.
 
-# The Content of The Code:
->**Here is some explainations for the code.**
+# The Content of Code:
+>**Here is the explaination for the code.**
 
 ## **1. Data:**
 
@@ -60,7 +60,7 @@ This package contains all images used for setting up buttons, custom fonts and c
 >* If you intentionally add an account twice, the system will announce you.
 
 **More details:** 
-[Report of The Assignment](https://www.google.com)
+[Report of The Assignment](https://tinyurl.com/CNAssignmentOne)
 
 ## What We Need To Improve:
 >* Need an online server for easier accessing the application.
@@ -84,12 +84,14 @@ This package contains all images used for setting up buttons, custom fonts and c
 Those custom classes which are:
 * RoundedBorder (Peter Mortensen & Lalchand)
 * RoundJTextField (Harry Joy)
+
 Belong to the StackOverflow's users.
 
 ## The Custom Fonts:
+Those fonts below belong to the owner itself.
 * Caranda
 * Gabriola
-Those belong to the owner.
+
 
 > All The Code **except the custom classes above** belong to The Lazy Team.
 >
